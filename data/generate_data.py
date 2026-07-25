@@ -3,9 +3,8 @@ import numpy as np
 
 np.random.seed(42)
 
-# ---------------------------
 # 1. Item Info
-# ---------------------------
+
 items = pd.DataFrame({
     "item_id": [f"MED{i:03d}" for i in range(1, 21)],
     "category": np.random.choice(
@@ -16,26 +15,23 @@ items = pd.DataFrame({
 })
 items.to_csv("data/item_info.csv", index=False)
 
-# ---------------------------
 # 2. Calendar Data
-# ---------------------------
+
 dates = pd.date_range(start="2023-01-01", end="2024-12-31", freq="D")
 calendar = pd.DataFrame({"date": dates})
 calendar["day_of_week"] = calendar["date"].dt.day_name()
 calendar["is_weekend"] = calendar["date"].dt.weekday >= 5
 
-# mark a handful of holidays
+
 holidays = ["2023-01-26", "2023-08-15", "2023-10-02", "2023-12-25",
             "2024-01-26", "2024-08-15", "2024-10-02", "2024-12-25"]
 calendar["is_holiday"] = calendar["date"].astype(str).isin(holidays)
 
-# random promo events (~10% of days)
 calendar["is_promo"] = np.random.choice([0, 1], size=len(calendar), p=[0.9, 0.1])
 calendar.to_csv("data/calendar_data.csv", index=False)
 
-# ---------------------------
 # 3. Sales Transaction Data
-# ---------------------------
+
 stores = [f"STORE{i}" for i in range(1, 6)]
 rows = []
 

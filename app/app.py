@@ -12,8 +12,7 @@ st.set_page_config(page_title="Meditrak - Demand Forecasting", layout="wide")
 st.title("Meditrak — AI Inventory Forecasting Module")
 st.caption("Predictive demand forecasting for multi-store pharmacy inventory")
 
-# --- NEW: Download model from Hugging Face (free hosting) ---
-REPO_ID = "somanpatrasom/meditrak-demand-model"  # <-- change "yourname" to your HF username
+REPO_ID = "somanpatrasom/meditrak-demand-model"
 
 @st.cache_resource
 def load_model():
@@ -26,9 +25,7 @@ def load_model():
     return bundle["model"], bundle["feature_columns"]
 
 model, feature_columns = load_model()
-# --- END NEW ---
 
-# --- Load or generate forecast ---
 @st.cache_data
 def load_forecast():
     path = "data/predicted_inventory_next_month.csv"
@@ -39,7 +36,6 @@ def load_forecast():
 
 inventory = load_forecast()
 
-# --- Sidebar filters ---
 st.sidebar.header("Filters")
 store_filter = st.sidebar.selectbox("Select Store", ["All"] + sorted(inventory["store_id"].unique()))
 category_filter = st.sidebar.selectbox("Select Category", ["All"] + sorted(inventory["category"].unique()))
@@ -50,7 +46,6 @@ if store_filter != "All":
 if category_filter != "All":
     filtered = filtered[filtered["category"] == category_filter]
 
-# --- KPIs ---
 col1, col2, col3 = st.columns(3)
 col1.metric("Total Predicted Units (Next 30 Days)", f"{filtered['predicted_monthly_demand'].sum():,.0f}")
 col2.metric("Items Tracked", filtered["item_id"].nunique())
@@ -58,7 +53,6 @@ col3.metric("Stores Covered", filtered["store_id"].nunique())
 
 st.divider()
 
-# --- Reorder alert threshold ---
 st.subheader("Recommended Replenishment List")
 threshold = st.slider("Flag items predicted to sell above this many units next month", 0, 500, 100)
 
@@ -75,12 +69,10 @@ st.download_button(
 
 st.divider()
 
-# --- Chart: Top items by predicted demand ---
 st.subheader("Top 10 Medicines by Predicted Demand")
 top10 = filtered.groupby("item_id")["predicted_monthly_demand"].sum().nlargest(10)
 st.bar_chart(top10)
 
-# --- Model performance section ---
 st.divider()
 st.subheader("Model Performance")
 report_path = "models/performance_report.txt"

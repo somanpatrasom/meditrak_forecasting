@@ -3,8 +3,7 @@ import numpy as np
 import joblib
 
 def build_future_calendar(start_date, days=30):
-    """Builds a simple future calendar. Replace is_holiday/is_promo
-    with your actual known upcoming dates when available."""
+
     dates = pd.date_range(start=start_date, periods=days, freq="D")
     cal = pd.DataFrame({"date": dates})
     cal["day_of_week"] = cal["date"].dt.day_name()
@@ -34,7 +33,6 @@ def predict_next_month():
             hist = sales[(sales["store_id"] == store) & (sales["item_id"] == item_id)]
             hist = hist.sort_values("date")
 
-            # seed recent history for lag/rolling features
             recent_sales = list(hist["units_sold"].tail(7))
             if len(recent_sales) == 0:
                 recent_sales = [0]
@@ -57,7 +55,6 @@ def predict_next_month():
                     "rolling_7_avg": rolling_7,
                 }
 
-                # one-hot encode category & day_of_week to match training columns
                 for col in feature_cols:
                     if col.startswith("category_") and col == f"category_{item['category']}":
                         record[col] = 1
@@ -81,7 +78,6 @@ def predict_next_month():
 
     forecast_df = pd.DataFrame(results)
 
-    # Monthly total per store/item = the actual "inventory list to order"
     inventory_list = (
         forecast_df.groupby(["store_id", "item_id", "category"])["predicted_units"]
         .sum()

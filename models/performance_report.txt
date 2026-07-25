@@ -1,5 +1,5 @@
 MEDITRAK DEMAND FORECASTING - MODEL PERFORMANCE REPORT
-=======================================================
+
 Mean Absolute Error (MAE): 3.40 units
 Root Mean Squared Error (RMSE): 4.27 units
 R² Score: 0.359
