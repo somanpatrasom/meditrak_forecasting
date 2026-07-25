@@ -85,7 +85,7 @@ st.divider()
 st.subheader("Model Performance")
 report_path = "models/performance_report.txt"
 if os.path.exists(report_path):
-    with open(report_path) as f:
+    with open(report_path, "r", encoding = "utf-8") as f:
         st.text(f.read())
 else:
     st.info("Run train_model.py first to generate the performance report.")

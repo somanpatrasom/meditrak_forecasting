@@ -1,7 +1,7 @@
 from huggingface_hub import HfApi, login
 
 # Paste your Hugging Face token here (from Step 1)
-HF_TOKEN = "<your_huggingface_token>"
+HF_TOKEN = "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"
 
 # Replace "yourname" with your actual Hugging Face username
 REPO_ID = "somanpatrasom/meditrak-demand-model"

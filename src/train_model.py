@@ -50,7 +50,7 @@ def train():
     print(f"R²   (variance explained):           {r2:.3f}")
 
     # Save evaluation report
-    with open("models/performance_report.txt", "w") as f:
+    with open("models/performance_report.txt", "w", encoding="utf-8") as f:
         f.write("MEDITRAK DEMAND FORECASTING - MODEL PERFORMANCE REPORT\n")
         f.write("=" * 55 + "\n")
         f.write(f"Mean Absolute Error (MAE): {mae:.2f} units\n")
