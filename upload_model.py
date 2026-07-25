@@ -1,6 +1,6 @@
 from huggingface_hub import HfApi, login
 
-HF_TOKEN = "<your_huggingface_token>"
+HF_TOKEN = "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"
 
 REPO_ID = "somanpatrasom/meditrak-demand-model"
 
